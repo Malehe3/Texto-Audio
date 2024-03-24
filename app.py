@@ -59,41 +59,33 @@ recetas = {
     # Agrega más recetas según necesites
 }
 
-# Opción para ingresar texto o seleccionar una receta predefinida
-option = st.radio("¿Cómo prefieres obtener la receta?", ("Escribir la receta", "Seleccionar receta predefinida"))
+# Opción para seleccionar una receta predefinida
+selected_recipe_name = st.selectbox("Selecciona una receta predefinida", list(recetas.keys()))
 
-# Si elige escribir la receta
-if option == "Escribir la receta":
-    text = st.text_area("Escribe la receta aquí")
-else:
-    # Lista de recetas predefinidas
-    recetas_predefinidas = list(recetas.keys())
-    selected_recipe = st.selectbox("Selecciona una receta predefinida", recetas_predefinidas)
-    text = selected_recipe
-    # Muestra la descripción, ingredientes y preparación de la receta seleccionada
-    st.write(f"Descripción: {recetas[selected_recipe]['descripcion']}")
-    st.write("Ingredientes:")
-    for ingrediente in recetas[selected_recipe]['ingredientes']:
-        st.write(f"- {ingrediente}")
-    st.write("Preparación:")
-    st.write(recetas[selected_recipe]['preparacion'])
+# Verifica si se ha seleccionado una receta
+if selected_recipe_name:
+    st.write(f"Nombre de la receta: {selected_recipe_name}")
+    st.write("Haz clic en el botón a continuación para ver la receta completa y escucharla:")
+    if st.button("Ver receta completa"):
+        st.write(f"Descripción: {recetas[selected_recipe_name]['descripcion']}")
+        st.write("Ingredientes:")
+        for ingrediente in recetas[selected_recipe_name]['ingredientes']:
+            st.write(f"- {ingrediente}")
+        st.write("Preparación:")
+        st.write(recetas[selected_recipe_name]['preparacion'])
 
-# Botón para convertir texto a audio
-if st.button("Convertir texto a audio"):
-    result, output_text = text_to_speech(text, "es")
-    audio_file = open(f"temp/{result}.mp3", "rb")
-    audio_bytes = audio_file.read()
-    st.audio(audio_bytes, format="audio/mp3", start_time=0)
-    st.markdown(f"## Texto en audio:")
-    st.write(f" {output_text}")
+        # Convertir la receta completa a texto y audio
+        full_recipe_text = f"Nombre de la receta: {selected_recipe_name}. "
+        full_recipe_text += f"Descripción: {recetas[selected_recipe_name]['descripcion']}. "
+        full_recipe_text += "Ingredientes: "
+        for ingrediente in recetas[selected_recipe_name]['ingredientes']:
+            full_recipe_text += f"{ingrediente}. "
+        full_recipe_text += "Preparación: "
+        full_recipe_text += recetas[selected_recipe_name]['preparacion']
+        
+        if st.button("Convertir receta a audio"):
+            result, output_text = text_to_speech(full_recipe_text, "es")
+            audio_file = open(f"temp/{result}.mp3", "rb")
+            audio_bytes = audio_file.read()
+            st.audio(audio_bytes, format="audio/mp3", start_time=0)
 
-def remove_files(n):
-    mp3_files = glob.glob("temp/*mp3")
-    if len(mp3_files) != 0:
-        now = time.time()
-        n_days = n * 86400
-        for f in mp3_files:
-            if os.stat(f).st_mtime < now - n_days:
-                os.remove(f)
-
-remove_files(7)
