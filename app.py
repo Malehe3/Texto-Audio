@@ -69,7 +69,8 @@ else:
     # Lista de recetas predefinidas
     recetas_predefinidas = list(recetas.keys())
     selected_recipe = st.selectbox("Selecciona una receta predefinida", recetas_predefinidas)
-    text = selected_recipe
+    text = f"{recetas[selected_recipe]['descripcion']}. Ingredientes: {'; '.join(recetas[selected_recipe]['ingredientes'])}. Preparación: {recetas[selected_recipe]['preparacion']}"
+
     # Muestra la descripción, ingredientes y preparación de la receta seleccionada
     st.write(f"Descripción: {recetas[selected_recipe]['descripcion']}")
     st.write("Ingredientes:")
