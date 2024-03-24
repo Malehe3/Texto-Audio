@@ -7,7 +7,7 @@ from PIL import Image
 
 st.title("CocinaFacil - Tu Asistente de Cocina Personalizado")
 
-image = Image.open('gatito.jpg')
+image = Image.open('Gatitochef2.jpg')
 st.image(image, width=200)
 
 try:
