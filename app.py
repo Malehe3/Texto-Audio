@@ -57,6 +57,18 @@ if st.button("Ver Receta"):
     st.write(f"**Ingredientes:** {recetas[selected_recipe]['Ingredientes']}")
     st.write(f"**Instrucciones:** {recetas[selected_recipe]['Instrucciones']}")
 
+# Opción para ingresar texto o seleccionar una receta predefinida
+option = st.radio("¿Cómo prefieres obtener la receta?", ("Escribir la receta", "Seleccionar receta predefinida"))
+
+# Si elige escribir la receta
+if option == "Escribir la receta":
+    text = st.text_area("Escribe la receta aquí")
+else:
+    # Lista de recetas predefinidas
+    recetas_predefinidas = ["Tacos de Pollo Mexicano", "Espaguetis a la Boloñesa", "Salmón al Horno con Verduras"]
+    selected_recipe = st.selectbox("Selecciona una receta predefinida", recetas_predefinidas)
+    text = recetas[selected_recipe]['Descripción'] + "\n" + recetas[selected_recipe]['Ingredientes'] + "\n" + recetas[selected_recipe]['Instrucciones']
+
 # Botón para convertir texto a audio
 if st.button("Convertir texto a audio"):
     result, output_text = text_to_speech(text, "es")
@@ -76,4 +88,3 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
-
