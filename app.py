@@ -17,7 +17,7 @@ except:
 
 
 # Mensaje de bienvenida
-st.write("¡Bienvenido a CocinaFacil con ChefIA, tu asistente de cocina personal! Te narraremos las recetas para que puedas concentrarte en cocinar sin preocupaciones de posibles accidentes y disfrutar al máximo de tus creaciones culinarias.")
+st.write("¡Bienvenido a CocinaFacil con ChefIA, tu asistente de cocina personal! Quien te narrará las recetas para que puedas concentrarte en cocinar sin preocupaciones de posibles accidentes y disfrutar al máximo de tus creaciones culinarias.")
 
 # Función para convertir texto a audio
 def text_to_speech(text, tld):
