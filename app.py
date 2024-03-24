@@ -8,7 +8,7 @@ from PIL import Image
 st.title("CocinaFacil - Tu Asistente de Cocina Personalizado")
 
 image = Image.open('Gatitochef2.jpg')
-st.image(image, width=200, , caption='Ya no serás este:')
+st.image(image, width=200, caption='Ya no serás este:')
 
 try:
     os.mkdir("temp")
