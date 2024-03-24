@@ -28,14 +28,35 @@ def text_to_speech(text, tld):
     tts.save(f"temp/{my_file_name}.mp3")
     return my_file_name, text
 
-# Diccionario de recetas con descripciones
-descripciones_recetas = {
-    "Tacos al Pastor": "Deliciosos tacos mexicanos con carne de cerdo adobada, piña, cebolla y cilantro.",
-    "Ensalada César": "Ensalada fresca con lechuga, crutones, queso parmesano y aderezo César.",
-    "Sopa de Tortilla": "Sopa caliente y reconfortante con caldo de pollo, tiras de tortilla, aguacate, queso y crema.",
-    "Pollo a la Parrilla con Verduras Asadas": "Pollo marinado y jugoso a la parrilla acompañado de verduras asadas, como pimientos, cebollas y calabacines.",
-    "Pasta Alfredo con Champiñones": "Pasta cremosa con salsa Alfredo casera y champiñones salteados.",
-    "Tarta de Manzana": "Postre clásico con una base de masa quebrada, relleno de manzanas caramelizadas y una cobertura crujiente de azúcar y canela.",
+# Diccionario de recetas con descripciones, ingredientes y preparación
+recetas = {
+    "Tacos al Pastor": {
+        "descripcion": "Deliciosos tacos mexicanos con carne de cerdo adobada, piña, cebolla y cilantro.",
+        "ingredientes": [
+            "500g de carne de cerdo en trozos pequeños",
+            "1 taza de piña en trozos",
+            "1 cebolla picada",
+            "Cilantro fresco picado",
+            "Tortillas de maíz",
+            "Sal y pimienta al gusto",
+            "Salsa de tomate",
+            "Jugo de limón"
+        ],
+        "preparacion": "1. Marinar la carne de cerdo con achiote, jugo de naranja, vinagre y sal. \n2. Asar la carne en un trompo o en una sartén hasta que esté cocida. \n3. Calentar las tortillas y rellenarlas con la carne, piña, cebolla y cilantro. \n4. Servir con salsa de tomate y jugo de limón al gusto."
+    },
+    "Ensalada César": {
+        "descripcion": "Ensalada fresca con lechuga, crutones, queso parmesano y aderezo César.",
+        "ingredientes": [
+            "Lechuga romana",
+            "Crutones",
+            "Queso parmesano rallado",
+            "Pechuga de pollo cocida y cortada en tiras",
+            "Salsa César",
+            "Sal y pimienta al gusto"
+        ],
+        "preparacion": "1. Mezclar la lechuga con los crutones, el queso parmesano y las tiras de pollo. \n2. Agregar la salsa César y mezclar bien. \n3. Sazonar con sal y pimienta al gusto. \n4. Servir fría."
+    },
+    # Agrega más recetas según necesites
 }
 
 # Opción para ingresar texto o seleccionar una receta predefinida
@@ -46,11 +67,16 @@ if option == "Escribir la receta":
     text = st.text_area("Escribe la receta aquí")
 else:
     # Lista de recetas predefinidas
-    recetas_predefinidas = list(descripciones_recetas.keys())
+    recetas_predefinidas = list(recetas.keys())
     selected_recipe = st.selectbox("Selecciona una receta predefinida", recetas_predefinidas)
     text = selected_recipe
-    # Muestra la descripción de la receta seleccionada
-    st.write(f"Descripción: {descripciones_recetas[selected_recipe]}")
+    # Muestra la descripción, ingredientes y preparación de la receta seleccionada
+    st.write(f"Descripción: {recetas[selected_recipe]['descripcion']}")
+    st.write("Ingredientes:")
+    for ingrediente in recetas[selected_recipe]['ingredientes']:
+        st.write(f"- {ingrediente}")
+    st.write("Preparación:")
+    st.write(recetas[selected_recipe]['preparacion'])
 
 # Botón para convertir texto a audio
 if st.button("Convertir texto a audio"):
