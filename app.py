@@ -15,6 +15,7 @@ try:
 except:
     pass
 
+
 # Mensaje de bienvenida
 st.write("¡Bienvenido a CocinaFacil con ChefIA, tu asistente de cocina personal! Quien te narrará las recetas para que puedas concentrarte en cocinar sin preocupaciones de posibles accidentes y disfrutar al máximo de tus creaciones culinarias.")
 
@@ -28,34 +29,17 @@ def text_to_speech(text, tld):
     tts.save(f"temp/{my_file_name}.mp3")
     return my_file_name, text
 
-# Recetas predefinidas
-recetas = {
-    "Receta 1": {
-        "Descripción": "Descripción de la Receta 1",
-        "Ingredientes": "Ingredientes de la Receta 1",
-        "Instrucciones": "Instrucciones de la Receta 1"
-    },
-    "Receta 2": {
-        "Descripción": "Descripción de la Receta 2",
-        "Ingredientes": "Ingredientes de la Receta 2",
-        "Instrucciones": "Instrucciones de la Receta 2"
-    },
-    "Receta 3": {
-        "Descripción": "Descripción de la Receta 3",
-        "Ingredientes": "Ingredientes de la Receta 3",
-        "Instrucciones": "Instrucciones de la Receta 3"
-    }
-}
+# Opción para ingresar texto o seleccionar una receta predefinida
+option = st.radio("¿Cómo prefieres obtener la receta?", ("Escribir la receta", "Seleccionar receta predefinida"))
 
-# Opción para seleccionar una receta predefinida
-selected_recipe = st.selectbox("Selecciona una receta predefinida", list(recetas.keys()))
-
-# Mostrar la receta completa una vez seleccionada
-if st.button("Ver Receta"):
-    st.subheader(selected_recipe)
-    st.write(f"**Descripción:** {recetas[selected_recipe]['Descripción']}")
-    st.write(f"**Ingredientes:** {recetas[selected_recipe]['Ingredientes']}")
-    st.write(f"**Instrucciones:** {recetas[selected_recipe]['Instrucciones']}")
+# Si elige escribir la receta
+if option == "Escribir la receta":
+    text = st.text_area("Escribe la receta aquí")
+else:
+    # Lista de recetas predefinidas
+    recetas_predefinidas = ["Receta 1", "Receta 2", "Receta 3"]
+    selected_recipe = st.selectbox("Selecciona una receta predefinida", recetas_predefinidas)
+    text = selected_recipe
 
 # Botón para convertir texto a audio
 if st.button("Convertir texto a audio"):
@@ -76,4 +60,3 @@ def remove_files(n):
                 os.remove(f)
 
 remove_files(7)
-
